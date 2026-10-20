@@ -1,0 +1,31 @@
+{
+  "app": { "name": "MowiHR" },
+  "login": {
+    "title": "Sign in to MowiHR",
+    "subtitle": "Use your Mowi Google account.",
+    "refused": "We couldn't sign you in. Use your Mowi account or ask HR for access.",
+    "unavailable": "Sign-in isn't available right now. Try again in a few minutes.",
+    "devTitle": "Development sign-in",
+    "devHint": "Local and test environments only.",
+    "devEmail": "Email",
+    "devSubmit": "Sign in"
+  },
+  "home": {
+    "greeting": "Hi, {name}",
+    "rolesTitle": "Your roles",
+    "comingSoon": "The directory, time off and payments arrive in the next phases."
+  },
+  "roles": {
+    "employee": "Employee",
+    "area_leader": "Area leader",
+    "hr": "HR",
+    "board_approver": "Board approver",
+    "super_admin": "Super admin"
+  },
+  "common": {
+    "signOut": "Sign out",
+    "language": "Language",
+    "saveError": "Couldn't save. Try again."
+  },
+  "languages": { "es": "Español", "pt": "Português", "en": "English" }
+}

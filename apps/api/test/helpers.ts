@@ -11,7 +11,8 @@ const ownerBase =
   'postgres://mowihr_owner:mowihr_owner@localhost:5432/postgres';
 
 export const TEST_DB_NAME = 'mowihr_test';
-export const TEST_APP_PASSWORD = 'mowihr_app_test';
+// mowihr_app is a cluster-wide role, so tests reuse the local password from .env.example.
+export const TEST_APP_PASSWORD = 'mowihr_app';
 
 export function ownerUrl(database = TEST_DB_NAME): string {
   const url = new URL(ownerBase);

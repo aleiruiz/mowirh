@@ -1,0 +1,31 @@
+{
+  "app": { "name": "MowiHR" },
+  "login": {
+    "title": "Ingresá a MowiHR",
+    "subtitle": "Usá tu cuenta de Google de Mowi.",
+    "refused": "No pudimos dejarte entrar. Usá tu cuenta de Mowi o pedile acceso a RR. HH.",
+    "unavailable": "El inicio de sesión no está disponible en este momento. Probá de nuevo en unos minutos.",
+    "devTitle": "Ingreso de desarrollo",
+    "devHint": "Solo en entornos locales y de pruebas.",
+    "devEmail": "Correo",
+    "devSubmit": "Entrar"
+  },
+  "home": {
+    "greeting": "Hola, {name}",
+    "rolesTitle": "Tus roles",
+    "comingSoon": "El directorio, las vacaciones y los pagos llegan en las próximas fases."
+  },
+  "roles": {
+    "employee": "Colaborador",
+    "area_leader": "Líder de área",
+    "hr": "RR. HH.",
+    "board_approver": "Aprobador del directorio",
+    "super_admin": "Superadministrador"
+  },
+  "common": {
+    "signOut": "Cerrar sesión",
+    "language": "Idioma",
+    "saveError": "No se pudo guardar. Probá de nuevo."
+  },
+  "languages": { "es": "Español", "pt": "Português", "en": "English" }
+}

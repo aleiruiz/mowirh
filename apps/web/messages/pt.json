@@ -1,0 +1,31 @@
+{
+  "app": { "name": "MowiHR" },
+  "login": {
+    "title": "Entre no MowiHR",
+    "subtitle": "Use sua conta Google da Mowi.",
+    "refused": "Não foi possível entrar. Use sua conta da Mowi ou peça acesso ao RH.",
+    "unavailable": "O login não está disponível no momento. Tente novamente em alguns minutos.",
+    "devTitle": "Login de desenvolvimento",
+    "devHint": "Somente em ambientes locais e de teste.",
+    "devEmail": "E-mail",
+    "devSubmit": "Entrar"
+  },
+  "home": {
+    "greeting": "Olá, {name}",
+    "rolesTitle": "Seus papéis",
+    "comingSoon": "O diretório, as férias e os pagamentos chegam nas próximas fases."
+  },
+  "roles": {
+    "employee": "Colaborador",
+    "area_leader": "Líder de área",
+    "hr": "RH",
+    "board_approver": "Aprovador da diretoria",
+    "super_admin": "Superadministrador"
+  },
+  "common": {
+    "signOut": "Sair",
+    "language": "Idioma",
+    "saveError": "Não foi possível salvar. Tente novamente."
+  },
+  "languages": { "es": "Español", "pt": "Português", "en": "English" }
+}
