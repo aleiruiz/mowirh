@@ -38,6 +38,7 @@ export function testEnv(overrides: Record<string, string> = {}): Env {
     GOOGLE_WORKSPACE_DOMAIN: DOMAIN,
     WEB_ORIGIN,
     DEV_LOGIN_ENABLED: 'true',
+    SIGN_IN_ATTEMPTS_PER_5_MIN: '10000',
     ...overrides,
   });
 }

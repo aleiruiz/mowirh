@@ -3,6 +3,7 @@ import path from 'node:path';
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
 import pg from 'pg';
+import { isLocalEnv } from '../config/env.js';
 
 const migrationsFolder = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -36,10 +37,9 @@ const isEntrypoint = process.argv[1] === fileURLToPath(import.meta.url);
 if (isEntrypoint) {
   const ownerUrl = process.env.DATABASE_OWNER_URL;
   if (!ownerUrl) throw new Error('DATABASE_OWNER_URL is required to run migrations');
-  const appPassword =
-    process.env.NODE_ENV === 'staging' || process.env.NODE_ENV === 'production'
-      ? undefined
-      : process.env.DATABASE_APP_PASSWORD;
+  const appPassword = isLocalEnv(process.env.NODE_ENV)
+    ? process.env.DATABASE_APP_PASSWORD
+    : undefined;
   await runMigrations(ownerUrl, { appPassword });
   console.log('Migrations applied');
 }

@@ -56,5 +56,7 @@ GRANT USAGE ON SCHEMA public TO mowihr_app;--> statement-breakpoint
 GRANT SELECT, INSERT, UPDATE ON areas, employees, role_assignments, sessions TO mowihr_app;--> statement-breakpoint
 GRANT SELECT, INSERT ON audit_log TO mowihr_app;--> statement-breakpoint
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO mowihr_app;--> statement-breakpoint
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, INSERT, UPDATE ON TABLES TO mowihr_app;--> statement-breakpoint
+-- Tables created later get read and insert only; UPDATE is granted table by
+-- table, so versioned and insert-only tables stay immutable by default.
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, INSERT ON TABLES TO mowihr_app;--> statement-breakpoint
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT USAGE, SELECT ON SEQUENCES TO mowihr_app;

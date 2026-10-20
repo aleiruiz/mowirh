@@ -1,9 +1,10 @@
 import { fileURLToPath } from 'node:url';
 import pg from 'pg';
+import { isLocalEnv } from '../config/env.js';
 
 /**
  * Seeds the first super admin (the CEO) so someone can sign in and grant roles.
- * With --demo (refused in production) it also adds fake staff for staging.
+ * With --demo (only in development, test and staging) it also adds fake staff for staging.
  * Runs as the owner role; every row it writes is recorded in the audit log.
  */
 export async function seed(
@@ -121,7 +122,7 @@ if (isEntrypoint) {
   if (!ownerUrl || !email)
     throw new Error('DATABASE_OWNER_URL and SEED_SUPERADMIN_EMAIL are required');
   const demo = process.argv.includes('--demo');
-  if (demo && process.env.NODE_ENV === 'production')
+  if (demo && !(isLocalEnv(process.env.NODE_ENV) || process.env.NODE_ENV === 'staging'))
     throw new Error('Demo data is not allowed in production');
   await seed(ownerUrl, {
     superAdminEmail: email,

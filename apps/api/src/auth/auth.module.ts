@@ -5,6 +5,7 @@ import { AuthGuard } from './auth.guard.js';
 import { AuthService } from './auth.service.js';
 import { GoogleAuthLibraryVerifier, GoogleTokenVerifier } from './google-verifier.js';
 import { SessionService } from './session.service.js';
+import { SignInRateLimitGuard } from './rate-limit.guard.js';
 
 @Global()
 @Module({
@@ -12,6 +13,7 @@ import { SessionService } from './session.service.js';
   providers: [
     AuthService,
     SessionService,
+    SignInRateLimitGuard,
     { provide: GoogleTokenVerifier, useClass: GoogleAuthLibraryVerifier },
     { provide: APP_GUARD, useClass: AuthGuard },
   ],

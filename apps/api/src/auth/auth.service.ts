@@ -29,8 +29,10 @@ export class AuthService {
     try {
       identity = await this.verifier.verify(idToken);
     } catch (err) {
+      // Not audited: the endpoint is public, and an append-only table must not
+      // be something anyone on the internet can grow at will.
       this.logger.warn(`Google token rejected: ${(err as Error).message}`);
-      await this.refuse('invalid_token', null);
+      throw new UnauthorizedException(REFUSED);
     }
 
     const domain = this.env.GOOGLE_WORKSPACE_DOMAIN.toLowerCase();
@@ -58,7 +60,7 @@ export class AuthService {
 
   private async startSession(email: string) {
     const [employee] = await this.db
-      .select({ id: employees.id, status: employees.status })
+      .select({ id: employees.id, status: employees.status, locale: employees.locale })
       .from(employees)
       .where(live(employees, eq(employees.email, email)))
       .limit(1);
@@ -81,16 +83,22 @@ export class AuthService {
         },
         tx,
       );
-      return created;
+      return { ...created, locale: employee!.locale };
     });
   }
 
-  private async refuse(reason: string, email: string | null, employeeId?: string): Promise<never> {
+  private async refuse(reason: string, email: string, employeeId?: string): Promise<never> {
+    // Outsiders' addresses are personal data we have no reason to keep forever;
+    // for them only the domain is recorded.
+    const domain = this.env.GOOGLE_WORKSPACE_DOMAIN.toLowerCase();
+    const recorded = email.endsWith(`@${domain}`)
+      ? { email }
+      : { emailDomain: email.split('@')[1] ?? null };
     await this.audit.record({
       action: 'login_failed',
       entityType: 'session',
       actorId: employeeId ?? null,
-      metadata: { reason, email },
+      metadata: { reason, ...recorded },
     });
     throw new UnauthorizedException(REFUSED);
   }

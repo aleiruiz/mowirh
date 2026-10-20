@@ -69,3 +69,35 @@ describe('data protections', () => {
     );
   });
 });
+
+describe('app role privileges', () => {
+  // Tables the app may UPDATE. Anything else (audit log, future versioned
+  // tables) must stay insert-only; add a table here only on purpose.
+  const UPDATABLE = ['areas', 'employees', 'role_assignments', 'sessions'].sort();
+
+  it('can update only the tables that are meant to change', async () => {
+    const { rows } = await owner.query<{ tablename: string }>(
+      `SELECT relname AS tablename FROM pg_class
+       WHERE relnamespace = 'public'::regnamespace AND relkind = 'r'
+         AND has_table_privilege('mowihr_app', oid, 'UPDATE')
+       ORDER BY relname`,
+    );
+    expect(rows.map((r) => r.tablename)).toEqual(UPDATABLE);
+  });
+
+  it('gives tables created later read and insert only', async () => {
+    const client = await owner.connect();
+    try {
+      await client.query('BEGIN');
+      await client.query('CREATE TABLE privilege_probe (id int)');
+      const { rows } = await client.query(
+        `SELECT has_table_privilege('mowihr_app', 'privilege_probe', 'INSERT') AS ins,
+                has_table_privilege('mowihr_app', 'privilege_probe', 'UPDATE') AS upd`,
+      );
+      expect(rows[0]).toEqual({ ins: true, upd: false });
+    } finally {
+      await client.query('ROLLBACK');
+      client.release();
+    }
+  });
+});
