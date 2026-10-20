@@ -1,5 +1,7 @@
 {
-  "app": { "name": "MowiHR" },
+  "app": {
+    "name": "MowiHR"
+  },
   "login": {
     "title": "Entre no MowiHR",
     "subtitle": "Use sua conta Google da Mowi.",
@@ -25,7 +27,15 @@
   "common": {
     "signOut": "Sair",
     "language": "Idioma",
-    "saveError": "Não foi possível salvar. Tente novamente."
+    "saveError": "Não foi possível salvar. Tente novamente.",
+    "errorTitle": "Algo deu errado",
+    "errorBody": "Não foi possível carregar o MowiHR. Tente novamente em alguns minutos.",
+    "retry": "Tentar novamente",
+    "signOutError": "Não foi possível sair. Tente novamente."
   },
-  "languages": { "es": "Español", "pt": "Português", "en": "English" }
+  "languages": {
+    "es": "Español",
+    "pt": "Português",
+    "en": "English"
+  }
 }

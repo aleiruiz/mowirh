@@ -2,7 +2,7 @@
 
 import Script from 'next/script';
 import { useRouter } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useCallback, useRef, useState } from 'react';
 import { apiSend } from '@/lib/client-api';
 
@@ -34,6 +34,7 @@ export function GoogleSignIn({
   hostedDomain?: string;
 }) {
   const t = useTranslations('login');
+  const locale = useLocale();
   const router = useRouter();
   const buttonRef = useRef<HTMLDivElement>(null);
   const [error, setError] = useState<string | null>(null);
@@ -65,8 +66,9 @@ export function GoogleSignIn({
       size: 'large',
       text: 'signin_with',
       shape: 'pill',
+      locale,
     });
-  }, [clientId, hostedDomain, onCredential]);
+  }, [clientId, hostedDomain, onCredential, locale]);
 
   return (
     <>
@@ -74,6 +76,7 @@ export function GoogleSignIn({
         src="https://accounts.google.com/gsi/client"
         strategy="afterInteractive"
         onReady={init}
+        onError={() => setError(t('unavailable'))}
       />
       <div ref={buttonRef} />
       {error && (

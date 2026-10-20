@@ -10,12 +10,15 @@ import { apiSend, setLocaleCookie } from '@/lib/client-api';
 export function LocaleSwitcher({ current }: { current: Locale }) {
   const t = useTranslations();
   const router = useRouter();
-  const [pending, startTransition] = useTransition();
+  const [refreshing, startTransition] = useTransition();
+  const [saving, setSaving] = useState(false);
   const [error, setError] = useState(false);
 
   async function change(locale: Locale) {
     setError(false);
+    setSaving(true);
     const res = await apiSend('PATCH', '/me/preferences', { locale }).catch(() => null);
+    setSaving(false);
     if (!res?.ok) {
       setError(true);
       return;
@@ -33,7 +36,7 @@ export function LocaleSwitcher({ current }: { current: Locale }) {
         id="locale"
         aria-label={t('common.language')}
         value={current}
-        disabled={pending}
+        disabled={saving || refreshing}
         onChange={(e) => change(e.target.value as Locale)}
       >
         {LOCALES.map((l) => (

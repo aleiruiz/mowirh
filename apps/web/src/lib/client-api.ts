@@ -1,3 +1,5 @@
+import { LOCALE_COOKIE } from '@mowihr/shared';
+
 /** Same-origin calls to the API through the /api rewrite (see next.config.ts). */
 export async function apiSend(method: 'POST' | 'PATCH', path: string, body?: unknown) {
   return fetch(`/api${path}`, {
@@ -7,8 +9,6 @@ export async function apiSend(method: 'POST' | 'PATCH', path: string, body?: unk
     body: body === undefined ? undefined : JSON.stringify(body),
   });
 }
-
-const LOCALE_COOKIE = 'mowihr_locale';
 
 export function setLocaleCookie(locale: string) {
   document.cookie = `${LOCALE_COOKIE}=${encodeURIComponent(locale)}; path=/; max-age=31536000; samesite=lax`;
