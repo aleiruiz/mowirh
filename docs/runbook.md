@@ -20,7 +20,7 @@ pnpm dev                                       # API on :4000, web on :3000
 
 With `DEV_LOGIN_ENABLED=true` the login page shows a form to sign in as any seeded address, for example `rrhh.demo@mowiapp.com`.
 
-Checks, as CI runs them: `pnpm format:check && pnpm typecheck && pnpm lint && pnpm test && pnpm build`. API tests need a Postgres where `TEST_DATABASE_OWNER_URL` (default `postgres://mowihr_owner:mowihr_owner@localhost:5432/postgres`) can create databases; they recreate `mowihr_test` on each run.
+Checks, as CI runs them: `pnpm format:check && pnpm typecheck && pnpm lint && pnpm test && pnpm build`. API tests need a Postgres where `TEST_DATABASE_OWNER_URL` (default `postgres://mowihr_owner@localhost:5432/postgres`; set `PGPASSWORD` if your Postgres needs one) can create databases; they recreate `mowihr_test` on each run.
 
 ## Environment variables
 

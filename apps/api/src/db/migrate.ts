@@ -11,19 +11,25 @@ const migrationsFolder = path.resolve(
 );
 
 /**
- * Applies migrations as the owner role. When appPassword is given, also lets the
- * restricted mowihr_app role log in with it (local and test databases only; in
- * staging and production ops sets the password, see docs/runbook.md).
+ * Applies migrations as the owner role. With enableAppLogin (local and test
+ * databases only), also lets the restricted mowihr_app role log in, with the
+ * given password if any. In staging and production ops does this, see
+ * docs/runbook.md.
  */
-export async function runMigrations(ownerUrl: string, opts: { appPassword?: string } = {}) {
+export async function runMigrations(
+  ownerUrl: string,
+  opts: { enableAppLogin?: boolean; appPassword?: string } = {},
+) {
   const pool = new pg.Pool({ connectionString: ownerUrl, max: 1 });
   try {
     await migrate(drizzle(pool), { migrationsFolder });
-    if (opts.appPassword) {
+    if (opts.enableAppLogin) {
       const client = await pool.connect();
       try {
-        const quoted = client.escapeLiteral(opts.appPassword);
-        await client.query(`ALTER ROLE mowihr_app LOGIN PASSWORD ${quoted}`);
+        const password = opts.appPassword
+          ? ` PASSWORD ${client.escapeLiteral(opts.appPassword)}`
+          : '';
+        await client.query(`ALTER ROLE mowihr_app LOGIN${password}`);
       } finally {
         client.release();
       }

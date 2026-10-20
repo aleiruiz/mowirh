@@ -1,18 +1,18 @@
 import { Test } from '@nestjs/testing';
 import type { NestExpressApplication } from '@nestjs/platform-express';
 import pg from 'pg';
+import { inject } from 'vitest';
 import { AppModule } from '../src/app.module.js';
 import { applyHttpSettings } from '../src/app.js';
 import { GoogleTokenVerifier, type GoogleIdentity } from '../src/auth/google-verifier.js';
 import { loadEnv, type Env } from '../src/config/env.js';
 
+// No password in the default: CI and docker-compose trust local connections, and
+// libpq's PGPASSWORD works for a local Postgres that wants one.
 const ownerBase =
-  process.env.TEST_DATABASE_OWNER_URL ??
-  'postgres://mowihr_owner:mowihr_owner@localhost:5432/postgres';
+  process.env.TEST_DATABASE_OWNER_URL ?? 'postgres://mowihr_owner@localhost:5432/postgres';
 
 export const TEST_DB_NAME = 'mowihr_test';
-// mowihr_app is a cluster-wide role, so tests reuse the local password from .env.example.
-export const TEST_APP_PASSWORD = 'mowihr_app';
 
 export function ownerUrl(database = TEST_DB_NAME): string {
   const url = new URL(ownerBase);
@@ -23,7 +23,7 @@ export function ownerUrl(database = TEST_DB_NAME): string {
 export function appUrl(): string {
   const url = new URL(ownerUrl());
   url.username = 'mowihr_app';
-  url.password = TEST_APP_PASSWORD;
+  url.password = inject('appPassword');
   return url.toString();
 }
 
