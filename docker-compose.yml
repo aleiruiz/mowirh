@@ -1,0 +1,15 @@
+# Local development database. Mirrors the production setup: the app connects as
+# mowihr_app, which cannot DELETE, DROP or TRUNCATE (see apps/api/drizzle).
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: mowihr_owner
+      POSTGRES_PASSWORD: mowihr_owner
+      POSTGRES_DB: mowihr
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:

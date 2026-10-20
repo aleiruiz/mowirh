@@ -4,10 +4,10 @@ Internal HR web app for Mowi: employee directory and org chart, profiles, time o
 
 ## Documents
 
-| Document | Description |
-| --- | --- |
-| [docs/spec.en.md](docs/spec.en.md) | v1 product spec (English) |
-| [docs/spec.es.md](docs/spec.es.md) | Especificación v1 (español) |
+| Document                               | Description                        |
+| -------------------------------------- | ---------------------------------- |
+| [docs/spec.en.md](docs/spec.en.md)     | v1 product spec (English)          |
+| [docs/spec.es.md](docs/spec.es.md)     | Especificación v1 (español)        |
 | [docs/work-plan.md](docs/work-plan.md) | Phases, timeline, owners and risks |
 
 The screen designs live in the "MowiHR — Diseño v1" design canvas on claude.ai.
